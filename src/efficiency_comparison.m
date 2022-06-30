@@ -6,8 +6,9 @@
 %  outputs eps figure of information power and efficiency
 %
 % author:  JEhrich
-% version: 1.0 (2022-06-29)
-% changes: -
+% version: 1.1 (2022-06-30)
+% changes: renamed output csv files to include parameter values and removed
+% feedback gain
 clear
 close all
 clc
@@ -27,8 +28,6 @@ ts = 1/35;
 dg = 0.38;
 % nonequilibrium noise frequency
 fne = 1E4;
-% feedback gain
-alpha = 2;
 
 % maximum Dne in experiment
 Dne_exp_max = 1E2;
@@ -53,11 +52,11 @@ for ii = 1:length(Dne_vec)
     ii
     Dne = Dne_vec(ii);
     % reach steady-state ratcheting
-    [x_traj, l_traj, zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,Kini,alpha);
+    [x_traj, l_traj, zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,Kini);
     l0 = l_traj(end);
     % simulate a steady-state trajectory
     [x_traj, l_traj, ~] = sim_OU_ratchet(dg,Dne,fne,ts,K,...
-        alpha,x_traj(end),l0,zeta_traj(end));
+        x_traj(end),l0,zeta_traj(end));
     % velocity
     v(ii) = (l_traj(end) - l0)/K/ts;
     % rate of free energy gain
@@ -292,10 +291,12 @@ saveas(gcf, '../doc/compare_info_efficiency.eps','epsc')
 out = [Dne_ana',F_dot,P_info_ana];
 T = array2table(out);
 T.Properties.VariableNames(1:3) = {'Dne','F_dot','P_info'};
-writetable(T,['../data/info_power_Dne_' num2str(dg) '_ts' num2str(ts) '.csv']);
+writetable(T,['../data/info_power_dg_' num2str(dg) '_ts_' num2str(ts)...
+    '_fne_' num2str(fne) '.csv']);
 
 % write csv of efficiency inset data
 out = [F_dot, F_dot./P_info_ana, F_dot./(v.^2 + v*dg)];
 T = array2table(out);
 T.Properties.VariableNames(1:3) = {'F_dot','F_dot/P_info','F_dot/P_trap (conventional)'};
-writetable(T,['../data/info_efficiency_inset_Dne_' num2str(dg) '_ts' num2str(ts) '.csv']);
+writetable(T,['../data/info_efficiency_inset_dg_' num2str(dg) '_ts_' num2str(ts)...
+    '_fne_' num2str(fne) '.csv']);

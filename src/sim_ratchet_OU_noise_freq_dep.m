@@ -8,8 +8,8 @@
 %  - creates csv-file of correlation frequency vs. output power
 %
 % author:  JEhrich
-% version: 1.1 (2022-06-28)
-% changes: added comparison to preliminary simulation data
+% version: 1.2 (2022-06-30)
+% changes: removed variable feedback gain alpha
 clear
 close all
 clc
@@ -44,7 +44,7 @@ parfor ii = 1:length(fne_vec)
     ii
     fne = fne_vec(ii);
     % one simulation to equilibrate
-    [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,2);
+    [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K);
     % run N simulations, save final positions
     x_vec = nan(N,1);
     l_vec = nan(N,1);
@@ -52,7 +52,7 @@ parfor ii = 1:length(fne_vec)
         % re-center around l = 0
         x = x_traj(end) - l_traj(end);
         l = 0;
-        [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,2,x,l,zeta_traj(end));
+        [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,x,l,zeta_traj(end));
         % write out positions
         x_vec(jj) = x_traj(end);
         l_vec(jj) = l_traj(end);
