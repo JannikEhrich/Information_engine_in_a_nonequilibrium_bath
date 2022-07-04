@@ -1,4 +1,4 @@
-# Information_engine_nonequilibrium_bath
+# Information_engine_in_a_nonequilibrium_bath
  Code and files relating to manuscript "Information Engine in a Nonequilibrium Bath"
  
  ## Directories reference
