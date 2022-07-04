@@ -11,7 +11,7 @@ src/efficiency_comparison: Matlab script running calculations for the comparison
 
 src/OU_noise_propagator.mw: Maple script calculating the propagator of the particle dynamics and the nonequilibrium noise used for simulations
 
-src/sim_OU_ratchet.m: Matlab function simulating the ratchet dynmaics
+src/sim_OU_ratchet.m: Matlab function simulating ratchet dynamics
 
 src/sim_ratchet_OU_noise_freq_dep.m: Matlab script simulating ratchet performance for various nonequilibrium noise cutoff frequencies
 
