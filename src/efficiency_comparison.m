@@ -6,9 +6,8 @@
 %  outputs eps figure of information power and efficiency
 %
 % author:  JEhrich
-% version: 1.1 (2022-06-30)
-% changes: renamed output csv files to include parameter values and removed
-% feedback gain
+% version: 1.2 (2022-07-06)
+% changes: chaged ts to 1/42 to align with experiments
 clear
 close all
 clc
@@ -23,7 +22,7 @@ set(groot, 'defaultLegendInterpreter','latex');
 %% system parameters
 Dne_vec = logspace(-2,4,20);
 % sampling time
-ts = 1/35;
+ts = 1/42;
 % scaled effective mass
 dg = 0.38;
 % nonequilibrium noise frequency
@@ -171,8 +170,8 @@ ylabel('$P_\mathrm{info}$','Interpreter','latex');
 set(gca,'FontSize',fS);
 legend({'approximation','numerics'},...
     'Location','northwest');
-set(gca,'YLim',[4.2,6.1],'XLim',[min(Dne_vec),max(Dne_vec)]);
-text(min(Dne_vec)/7.5,6.1,'(a)','Interpreter','latex','FontSize',fS);
+set(gca,'YLim',[4.5,6.7],'XLim',[min(Dne_vec),max(Dne_vec)]);
+text(min(Dne_vec)/7.5,6.7,'(a)','Interpreter','latex','FontSize',fS);
 
 % plot distibutions
 ax2 = axes('Position',[0.13 0.09 0.22 0.26]);
