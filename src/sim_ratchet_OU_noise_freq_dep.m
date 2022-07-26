@@ -8,8 +8,8 @@
 %  - creates csv-file of correlation frequency vs. output power
 %
 % author:  JEhrich
-% version: 1.2 (2022-06-30)
-% changes: removed variable feedback gain alpha
+% version: 1.3 (2022-07-19)
+% changes: updated experimental parameters
 clear
 close all
 clc
@@ -22,12 +22,12 @@ set(groot, 'defaultAxesTickLabelInterpreter','latex');
 set(groot, 'defaultLegendInterpreter','latex');
 
 %% system parameters
-Dne = 9;
+Dne = 3.3;
 fne_vec = logspace(-3,6,1E2+1);
 % sampling time
-ts = 1/35;
+ts = 1/39;
 % scaled effective mass
-dg = 0.38;
+dg = 0.37;
 
 %% simulation parameters
 % number of samples
@@ -70,34 +70,22 @@ F_dot_white = dg*sqrt(2)*sqrt(1 + Dne)*exp(-dg^2/(2 + 2*Dne))/(sqrt(pi)*(1 + erf
 %% power without active noise
 F_dot_0 = dg*sqrt(2)*exp(-dg^2/2)/(sqrt(pi)*(1 + erf(sqrt(2)*dg/2)));
 
-
-%% Premliminary experimental data to compare simulations against
-data_exp = [.13 .26;
-        .44 .34;
-        1.5 .48
-        4.4 .59;
-        14.7 .67;
-        44.6 .83;
-        147 .82];
-
-
 %% plot output power and simulation data
 figure();
 errorbar(fne_vec,F_dot,sqrt(var_F_dot/N),'bs','Linewidth',lW,'MarkerSize',mS);
 hold on;
 plot(fne_vec,F_dot_white*ones(size(fne_vec)),'k:','Linewidth',lW,'MarkerSize',mS);
 plot(fne_vec,F_dot_0*ones(size(fne_vec)),'k--','Linewidth',lW,'MarkerSize',mS);
-plot(data_exp(:,1),data_exp(:,2),'rs','Linewidth',lW,'MarkerSize',mS);
 xlabel('O-U noise correlation frequency $f_\mathrm{neq}$','interpreter','latex');
 ylabel('rate of free energy gain','interpreter','latex');
 set(gca,'XScale','log','FontSize',fS);
 title(['sampling time $t_\mathrm{s}=' num2str(ts) '$, noise strength $D_\mathrm{ne}=' num2str(Dne) '$' ],'FontWeight','Normal','interpreter','latex');
-legend({'simulation','white-noise limit','no active noise','experiment'},'Location','NorthWest');
+legend({'simulation','white-noise limit','no active noise'},'Location','NorthWest');
 % save figure
 saveas(gcf, '../doc/ratchet_OU_noise_freq_dep.eps', 'epsc');
 
 %% write out curve
-out = [fne_vec', F_dot, sqrt(var_F_dot)];
+out = [fne_vec', F_dot, sqrt(var_F_dot/N)];
 T = array2table(out);
 T.Properties.VariableNames(1:3) = {'f_ne','F_dot','err F_dot'}
 writetable(T,['../data/sim_freq_dep_dg' num2str(dg) '_Dne' num2str(Dne) '_ts' num2str(ts)...

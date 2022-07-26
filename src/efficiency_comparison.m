@@ -6,13 +6,13 @@
 %  outputs eps figure of information power and efficiency
 %
 % author:  JEhrich
-% version: 1.2 (2022-07-06)
-% changes: chaged ts to 1/42 to align with experiments
+% version: 1.4 (2022-07-26)
+% changes: increased label size
 clear
 close all
 clc
 % set font size, line width, and marker size
-fS = 18;
+fS = 21;
 lW = 2.7;
 mS = 11;
 % set interpreter to latex
@@ -22,7 +22,7 @@ set(groot, 'defaultLegendInterpreter','latex');
 %% system parameters
 Dne_vec = logspace(-2,4,20);
 % sampling time
-ts = 1/42;
+ts = 1/40;
 % scaled effective mass
 dg = 0.38;
 % nonequilibrium noise frequency
@@ -161,7 +161,7 @@ end
 
 %% plot information power 
 figure('Position',[400,1000,560,490]);
-ax1 = axes('Position',[0.13 0.51 0.82 0.46]);
+ax1 = axes('Position',[0.13 0.52 0.82 0.45]);
 semilogx(Dne_ana,P_info_ana,'k-','LineWidth',lW,'MarkerSize',mS);
 hold on;
 semilogx(Dne_vec,P_info,'ks','LineWidth',lW,'MarkerSize',mS);
@@ -171,10 +171,10 @@ set(gca,'FontSize',fS);
 legend({'approximation','numerics'},...
     'Location','northwest');
 set(gca,'YLim',[4.5,6.7],'XLim',[min(Dne_vec),max(Dne_vec)]);
-text(min(Dne_vec)/7.5,6.7,'(a)','Interpreter','latex','FontSize',fS);
+text(min(Dne_vec)/7.5,6.7,'\textbf{(a)}','Interpreter','latex','FontSize',fS+2);
 
 % plot distibutions
-ax2 = axes('Position',[0.13 0.09 0.22 0.26]);
+ax2 = axes('Position',[0.13 0.11 0.22 0.24]);
 plot(nan,nan,'r','LineWidth',lW,'MarkerSize',mS);
 hold on;
 plot(nan,nan,'b','LineWidth',lW,'MarkerSize',mS);
@@ -184,17 +184,17 @@ bar(rm_ini,pi_rm_ini,'b','EdgeColor','none','BarWidth',1,'FaceAlpha',0.3);
 plot(rm_ini_ana,pi_rm_ini_ana,'b','LineWidth',lW,'MarkerSize',mS);
 plot(r_ini_ana,pi_r_ini_ana,'r','LineWidth',lW,'MarkerSize',mS);
 set(gca,'XLim',[min(rm_ini_ana),max(rm_ini_ana)]);
-set(gca,'Ylim',[0,0.7])
+set(gca,'Ylim',[0,0.79])
 set(gca,'FontSize',fS-2);
 xlabel('$r$','Interpreter','latex');
 %title(['$D_\mathrm{ne}=10^{' num2str(log10(Dne_vec(1))) '}$'],'FontWeight','normal','Interpreter','latex','FontSize',fS-2)
 annotation('textbox',[.17 .18 .1 .2], ...
     'String',['$D_\mathrm{ne}=10^{' num2str(log10(Dne_vec(1))) '}$'],...
     'EdgeColor','none','Interpreter','latex','FontSize',fS-2)
-text(-3.7,0.7,'(b)','Interpreter','latex','FontSize',fS);
+text(-3.7,0.7,'\textbf{(b)}','Interpreter','latex','FontSize',fS+2);
 
 
-ax3 = axes('Position',[0.43 0.09 0.22 0.26]);
+ax3 = axes('Position',[0.43 0.11 0.22 0.24]);
 plot(nan,nan,'r','LineWidth',lW,'MarkerSize',mS);
 hold on;
 plot(nan,nan,'b','LineWidth',lW,'MarkerSize',mS);
@@ -204,14 +204,14 @@ bar(rm_mid,pi_rm_mid,'b','EdgeColor','none','BarWidth',1,'FaceAlpha',0.3);
 plot(rm_mid_ana,pi_rm_mid_ana,'b','LineWidth',lW,'MarkerSize',mS);
 plot(r_mid_ana,pi_r_mid_ana,'r','LineWidth',lW,'MarkerSize',mS);
 set(gca,'XLim',[min(rm_mid_ana),max(rm_mid_ana)]);
-set(gca,'Ylim',[0,0.11])
+set(gca,'Ylim',[0,0.125])
 set(gca,'FontSize',fS-2);
 xlabel('$r$','Interpreter','latex');
 annotation('textbox',[.47 .18 .1 .2], ...
     'String',['$D_\mathrm{ne}=' num2str(round(Dne_mid)) '$'],...
     'EdgeColor','none','Interpreter','latex','FontSize',fS-2)
 
-ax4 = axes('Position',[0.73 0.09 0.22 0.26]);
+ax4 = axes('Position',[0.73 0.11 0.22 0.24]);
 plot(nan,nan,'r','LineWidth',lW,'MarkerSize',mS);
 hold on;
 plot(nan,nan,'b','LineWidth',lW,'MarkerSize',mS);
@@ -225,7 +225,7 @@ bar(rm_fin,pi_rm_fin,'b','EdgeColor','none','BarWidth',1,'FaceAlpha',0.3);
 plot(rm_fin_ana,pi_rm_fin_ana,'b','LineWidth',lW,'MarkerSize',mS);
 plot(r_fin_ana,pi_r_fin_ana,'r','LineWidth',lW,'MarkerSize',mS);
 set(gca,'XLim',[min(rm_fin_ana),max(rm_fin_ana)]);
-set(gca,'Ylim',[0,9E-3])
+set(gca,'Ylim',[0,1E-2])
 set(gca,'FontSize',fS-2);
 xlabel('$r$','Interpreter','latex');
 annotation('textbox',[.77 .18 .1 .2], ...
