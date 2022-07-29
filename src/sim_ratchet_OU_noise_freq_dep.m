@@ -8,7 +8,7 @@
 %  - creates csv-file of correlation frequency vs. output power
 %
 % author:  JEhrich
-% version: 1.3 (2022-07-19)
+% version: 1.4 (2022-07-28)
 % changes: updated experimental parameters
 clear
 close all
@@ -22,7 +22,7 @@ set(groot, 'defaultAxesTickLabelInterpreter','latex');
 set(groot, 'defaultLegendInterpreter','latex');
 
 %% system parameters
-Dne = 3.3;
+Dne = 3.04;
 fne_vec = logspace(-3,6,1E2+1);
 % sampling time
 ts = 1/39;
@@ -44,7 +44,7 @@ parfor ii = 1:length(fne_vec)
     ii
     fne = fne_vec(ii);
     % one simulation to equilibrate
-    [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K);
+    [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,2);
     % run N simulations, save final positions
     x_vec = nan(N,1);
     l_vec = nan(N,1);
@@ -52,7 +52,7 @@ parfor ii = 1:length(fne_vec)
         % re-center around l = 0
         x = x_traj(end) - l_traj(end);
         l = 0;
-        [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,x,l,zeta_traj(end));
+        [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,2,x,l,zeta_traj(end));
         % write out positions
         x_vec(jj) = x_traj(end);
         l_vec(jj) = l_traj(end);

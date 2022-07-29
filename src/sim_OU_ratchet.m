@@ -1,4 +1,4 @@
-function [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,x0,l0,zeta0)
+function [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,alpha,x0,l0,zeta0)
 %SIM_OU_ratchet simulates info ratchet dynamics with additional
 %Ornstein-Uhlenbeck noise with correlation frequency fne and strength Dne
 %
@@ -8,6 +8,7 @@ function [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,x0,l0,zeta0)
 %     fne: active O-U noise correlation frequency
 %      ts: sampling time
 %       K: number of samples
+%   alpha: feedback gain
 %      x0: (optional) initial particle position
 %      l0: (optional) initial ratchet position
 %   zeta0: (optional) initial noise value
@@ -18,11 +19,11 @@ function [x_traj,l_traj,zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,K,x0,l0,zeta0)
 %   zeta_traj: noise trajectory
 %
 % author:  JEhrich
-% version: 1.4 (2022-06-30)
-% changes: removed variable feedbakc gain                 
+% version: 1.5 (2022-07-28)
+% changes: added feedback gain alpha                 
 
 %% initialize positions with equilibrium values
-if nargin < 8
+if nargin < 9
     x0 = rand*sqrt(1+Dne)-dg;
     l0 = 0;
     zeta0 = rand*sqrt(Dne*fne);
@@ -56,7 +57,7 @@ for ii = 1:K
         + sqrt(c_xx - c_xzeta^2/c_zetazeta)*randn;
     % feedback
     if x > l
-        l = l + 2*(x-l);
+        l = l + alpha*(x-l);
     end
     % write trajectory vectors
     x_traj(ii+1) = x;

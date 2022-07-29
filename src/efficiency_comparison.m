@@ -51,10 +51,10 @@ for ii = 1:length(Dne_vec)
     ii
     Dne = Dne_vec(ii);
     % reach steady-state ratcheting
-    [x_traj, l_traj, zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,Kini);
+    [x_traj, l_traj, zeta_traj] = sim_OU_ratchet(dg,Dne,fne,ts,Kini,2);
     l0 = l_traj(end);
     % simulate a steady-state trajectory
-    [x_traj, l_traj, ~] = sim_OU_ratchet(dg,Dne,fne,ts,K,...
+    [x_traj, l_traj, ~] = sim_OU_ratchet(dg,Dne,fne,ts,K,2,...
         x_traj(end),l0,zeta_traj(end));
     % velocity
     v(ii) = (l_traj(end) - l0)/K/ts;
