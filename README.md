@@ -3,7 +3,7 @@
  
  ## Directories reference
 
-data/: directory containing simulation data for generating Figures 2 and 5 of the manuscript
+data/: directory containing simulation data for generating Figures 2(a) and 4 of the manuscript
 
 doc/: Directory containing figures of simulation data
 
