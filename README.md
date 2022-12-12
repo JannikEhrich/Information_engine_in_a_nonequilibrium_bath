@@ -7,7 +7,7 @@ data/: directory containing simulation data for generating Figures 2(a) and 4 of
 
 doc/: Directory containing figures of simulation data
 
-src/efficiency_comparison: Matlab script running calculations for the comparison of efficiency of information ratchet and conventional pulling experiment
+src/performance_comparison: Matlab script running calculations for the comparison of performance of information ratchet and conventional pulling experiment
 
 src/OU_noise_propagator.mw: Maple script calculating the propagator of the particle dynamics and the nonequilibrium noise used for simulations
 

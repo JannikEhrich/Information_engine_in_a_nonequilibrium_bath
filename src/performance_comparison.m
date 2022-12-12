@@ -1,13 +1,13 @@
-%EFFICIENCY_COMPARISON calculates information power required to run
+%PERFORMANCE_COMPARISON calculates information power required to run
 %information engine in a nonequilibrium bath and plots comparison of
-%efficiency with conventional engine
+%perfromance with conventional engine
 %
 % OUTPUTS:
-%  outputs eps figure of information power and efficiency
+%  outputs eps figure of information power and measure of performance
 %
 % author:  JEhrich
-% version: 1.4 (2022-07-26)
-% changes: increased label size
+% version: 2.0 (2022-11-17)
+% changes: replaced "efficiency" by "measure of performance"
 clear
 close all
 clc
@@ -235,7 +235,7 @@ annotation('textbox',[.77 .18 .1 .2], ...
 % save
 saveas(gcf, '../doc/information_power.eps','epsc')
 
-%% plot output, input power and efficiency
+%% plot output, input power and measure of performance
 % velocity from output power
 v = F_dot/dg;
 
@@ -256,13 +256,13 @@ text(1E1,0.52,'$\dot F$','Interpreter','latex','FontSize',fS);
 text(1E-1,7.5E0,'$P_\mathrm{info}$','Interpreter','latex','FontSize',fS,'color','r');
 text(1E-3,3.5E1,'\textbf{(a)}','Interpreter','latex','FontSize',fS);
 
-% efficiency
+% measure of performance
 ax2 = axes('Position',[0.13 0.085 0.77 0.42]);
 semilogx(Dne_ana(Dne_ana<Dne_exp_max),F_dot(Dne_ana<Dne_exp_max)./P_info_ana(Dne_ana<Dne_exp_max),'LineWidth',20,'MarkerSize',mS,'color',0.8*[1,1,1]);
 hold on;
 semilogx(Dne_ana,F_dot./P_info_ana,'k','LineWidth',lW,'MarkerSize',mS);
 xlabel('$D_\mathrm{ne}$','Interpreter','latex');
-ylabel('efficiency','Interpreter','latex');
+ylabel('measure of performance','Interpreter','latex');
 set(gca,'FontSize',fS);
 set(gca,'XLim',[min(Dne_vec),max(Dne_vec)]);
 set(gca,'YLim',[-0.04,1.5]);
@@ -284,7 +284,7 @@ set(gca,'FontSize',fS-2);
 set(gca,'XTick',[1E-1,1E0,1E1]);
 xlabel('$\dot F$','Interpreter','latex')
 
-saveas(gcf, '../doc/compare_info_efficiency.eps','epsc')
+saveas(gcf, '../doc/compare_info_performance.eps','epsc')
 
 % write csv of information power data
 out = [Dne_ana',F_dot,P_info_ana];
@@ -293,9 +293,9 @@ T.Properties.VariableNames(1:3) = {'Dne','F_dot','P_info'};
 writetable(T,['../data/info_power_dg_' num2str(dg) '_ts_' num2str(ts)...
     '_fne_' num2str(fne) '.csv']);
 
-% write csv of efficiency inset data
+% write csv of performance measure inset data
 out = [F_dot, F_dot./P_info_ana, F_dot./(v.^2 + v*dg)];
 T = array2table(out);
 T.Properties.VariableNames(1:3) = {'F_dot','F_dot/P_info','F_dot/P_trap (conventional)'};
-writetable(T,['../data/info_efficiency_inset_dg_' num2str(dg) '_ts_' num2str(ts)...
+writetable(T,['../data/info_performance_inset_dg_' num2str(dg) '_ts_' num2str(ts)...
     '_fne_' num2str(fne) '.csv']);
