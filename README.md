@@ -7,9 +7,11 @@ data/: directory containing simulation data for generating Figures 2(a) and 4 of
 
 doc/: Directory containing figures of simulation data
 
-src/performance_comparison: Matlab script running calculations for the comparison of performance of information ratchet and conventional pulling experiment
+src/effective_thermal_efficiency.m: Matlab script plotting comparison between effective thermal efficiency and Carnot efficiency
 
 src/OU_noise_propagator.mw: Maple script calculating the propagator of the particle dynamics and the nonequilibrium noise used for simulations
+
+src/performance_comparison: Matlab script running calculations for the comparison of performance of information ratchet and conventional pulling experiment
 
 src/sim_OU_ratchet.m: Matlab function simulating ratchet dynamics
 
